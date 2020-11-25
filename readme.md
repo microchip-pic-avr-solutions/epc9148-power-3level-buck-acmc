@@ -1,6 +1,6 @@
 ![image](images/microchip.jpg) 
 
-## %repoDescritpion%
+## EPC9148 POWER 3LEVEL BUCK ACMC
 
 Board Image if any.
 
