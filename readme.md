@@ -6,7 +6,7 @@
 <p>
   <center>
     Top View <br>
-    <img src="images/9148.png" alt="EPC9148 Top View" width="300">
+    <img src="images/9148_top.png" alt="EPC9148 Top View" width="300">
   </center>
 </p>
 
@@ -29,29 +29,22 @@ A single, high-speed type IV (4P4Z) voltage mode controller with enforced PWM st
 
 ## Related Documentation
 ##### Firmware Documentation
-  - [EPC9143 Online Firmware Documentation](https://microchip-pic-avr-examples.github.io/epc9148-power-3level-buck-acmc)
+  - TODO[EPC9148 Online Firmware Documentation](https://microchip-pic-avr-examples.github.io/epc9148-power-3level-buck-acmc)
 
 ##### Firmware Documentation
-  - [EPC9148 250W 3-Level Buck Converter Reference Design Product Website](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EPC9148)
+  - [EPC9148 48V Three-level Synchronous Buck Converter Reference Design Product Website](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EPC9148)
   - [EPC9148 Reference Design Quick Start Guide (QSG)](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf)
-  - [EPC9143 Reference Design Schematics](https://epc-co.com/epc/documents/schematics/EPC9148_Schematic.pdf)
-
+  - [EPC9148 Reference Design Schematics](https://epc-co.com/epc/documents/schematics/EPC9148_Schematic.pdf)
+  
 ## Software Used 
   - [MPLAB® X IDE v5.40](https://www.microchip.com/mplabx-ide-windows-installer)
   - [MPLAB® XC16 Compiler v1.50](https://www.microchip.com/mplabxc16windows)
   - [PowerSmart&trade; - Digital Control Library Designer, v0.9.12.642 (Pre-Release Version)](https://areiter128.github.io/DCLD/)
 
+
 ## Hardware Used
-The EPC9143 1/16th brick power module is best tested when plugged into EPC9531 test fixture. This test fixture also provides all required interfaces to program and debug the dsPIC33CK32MP102 DSC as well as test points and banana jack connectors for easy and safe handling of the kit during bench tests. The EPC9531 QSG provides detailed operating procedure instructions.
+The EPC9148 3-level synchronous buck converter module provides all required interfaces to program and debug the dsPIC33CK32MP102 DSC as well as test points and banana jack connectors for easy and safe handling of the kit during bench tests. The EPC9148 QSG provides detailed operating procedure instructions.
 
-  - EPC9143: EPC9143 16th Brick Non-Isolated Step Down Converter, Revision 4.0
-  - EPC9531: EPC9531 test fixture for EPC9143 16th brick reference design
-
-<p>
-  <center>
-    <img src="images/9531_test_fixture.png" alt="EPC9143 mounted on EPC9531 Test Fixture" width="500">
-  </center>
-</p>
 
 ## Device Support:
 Microchip devices used in this reference design:
@@ -59,33 +52,47 @@ Microchip devices used in this reference design:
   - [MCP6C02 Shunt Amplifier](https://www.microchip.com/MCP6C02)
 
 EPC devices used in this reference design
-  - [EPC2053: 100 V, 246 A Enhancement-Mode GaN Power Transistor](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2053.aspx)
+  - [EPC2038: 100 V, 246 A Enhancement-Mode GaN Power Transistor](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2038.aspx)
 
 ## Setup
 The board comes programmed and ready to be used when unpacked. No reprogramming of the target device is required to operate the board unless features or settings such as the nominal output voltage or start-up timing need to be modified. 
 
 <p>
   <center>
-    <img src="images/9531_9143_setup.png" alt="EPC9531 Test Fixture Connections - Top View" width="700">
-    <br>
-    EPC9531 Test Fixture Connections - Top View
+    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
+      <img src="images/9148_top_setup.png" alt="EPC9148 Test Connections - Top View" width="620">
+	</a>
+  <br>
+  EPC9148 Test Connections - Top View
   </center>
 </p>
 
 <p>
   <center>
-    <img src="images/9531_bottom.png" alt="EPC9531 Test Fixture Connections - Bottom View" width="620">
-    <br>
-    EPC9531 Test Fixture Connections - Bottom View
+    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
+      <img src="images/9148_bottom_setup.png" alt="EPC9148 Test Connections - Bottom View" width="620">
+	</a>
+  <br>
+  EPC9148 Test Connections - Bottom View
   </center>
 </p>
 
+<p>
+  <center>
+    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
+      <img src="images/9148_connectors.png" alt="EPC9148 Measurement Connection" width="680">
+	</a>
+  <br>
+  EPC9148 Measurement Connection
+  </center>
+</p>
 
-In case firmware based features need to be changed, the Microchip dsPIC33CK controller can be re-programmed using the in-circuit serial programming port (ICSP) available on the RJ-11 programming interface as well as the 5-pin header provided by the EPC9531 test fixture. These interfaces support all of Microchip’s in-circuit programmers/debuggers, such as MPLAB® ICD4, MPLAB® REAL ICE or MPLAB® PICkit4 and previous derivatives. See [EPC9531 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9531_qsg.pdf) for details.
+In case firmware based features need to be changed, the Microchip dsPIC33CK controller can be re-programmed using the in-circuit serial programming port (ICSP) available on the RJ-11 programming interface as well as the 6-pin header. A ribbon cable is needed to connect the programming kit and the EPC9148. These interfaces support all of Microchip’s in-circuit programmers/debuggers, such as MPLAB® ICD4, MPLAB® REAL ICE or MPLAB® PICkit4 and previous derivatives. See [EPC9148 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf) for details.
+
 
 
 ## Operation
-The converter is starting up automatically when more than 10.5 V DC are applied across the input terminals of the EPC9531 test fixture. It is not recommended to operate the EPC9143 reference design without proper decoupling capacitance at either input or output. The EPC9531 test fixture provides the best test environment for the converter. Please read the [EPC9531 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9531_qsg.pdf) to get detailed information about the requirements for setup and operation of this reference design.
+The converter is starting up automatically when more than 16.6 V DC are applied across the input terminals of the EPC9148.  Please read the [EPC9148 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf) to get detailed information about the requirements for setup and operation of this reference design.
 
 ## Firmware Quick-Start Guide
 
@@ -127,11 +134,14 @@ This firmware uses a digital type IV controller to close the feedback loop in vo
 
 <p>
   <center>
-    <img src="images/type4-avmc.png" alt="EPC9143 type IV - Advanced Voltage Control Loop" width="800">
-    <br>
-    EPC9143 Type IV Controller - Advanced Voltage Control Loop
+    <a href="https://www.microchip.com/EPC9151" rel="nofollow">
+      <img src="images/EPC9148_three_level_control_system.JPG" alt="EPC9148 three level control system" width="800">
+	</a>
+  <br>
+  EPC9148 three level control system
   </center>
 </p>
+
 This control loop can be turned on/off by using the ENABLE bit in the STATUS word of the cNPNZ_t controller data structure. The adaptive loop gain modulation is permanently active as soon as the control loop is enabled.
 
 ##### 3) Digital Controller Design
