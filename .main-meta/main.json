@@ -5,7 +5,7 @@
       "metaDataVersion":"1.0.0",
       "name":"com.microchip.mplabx.project.epc9148-power-3level-buck-acmc",
       "version":"1.0.0",
-      "displayName":"250 W 48 V Three-level Synchronous Buck Converter",
+      "displayName":"250W 48V Ultra-Thin Three-level Synchronous Buck Converter",
       "projectName":"epc9148-power-3level-buck-acmc",
       "shortDescription":"Firmware for EPC9148 250W Three-level Synchronous Buck Converter Design featuring average current mode control (ACMC) with enhanced PWM steering",
       "ide":{
