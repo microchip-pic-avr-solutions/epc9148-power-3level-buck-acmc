@@ -3,27 +3,21 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>epc9148-acmc</name>
-            <creation-uuid>fdac5ced-dfa7-4368-a3cb-42bdf808e3c1</creation-uuid>
+            <name>epc9148-acmc.X</name>
+            <creation-uuid>ff60928a-1a72-4870-92f1-a2f917a61f45</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
-            <asminc-extensions>inc</asminc-extensions>
+            <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>.</sourceRootElem>
-                <sourceRootElem>sources/config/init</sourceRootElem>
-                <sourceRootElem>sources/common</sourceRootElem>
-                <sourceRootElem>sources/fault_handler</sourceRootElem>
-                <sourceRootElem>sources/fault_handler/drivers</sourceRootElem>
-                <sourceRootElem>sources/pwr_control/drivers</sourceRootElem>
-                <sourceRootElem>sources/pwr_control/devices</sourceRootElem>
+                <sourceRootElem>..</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>EPC9143_R40</name>
+                    <name>p33CK32MP102</name>
                     <type>2</type>
                 </confElem>
             </confList>
