@@ -35,12 +35,23 @@
          }
       },
       "peripherals":[
-         "GPIO",
-         "UART"
+         "PORT",
+         "PWM",
+		 "ADC",
+		 "Timer"
       ],
-      "keywords":[
-         "GPIO",
-         "UART"
-      ]
+	  "subcategories": [
+		 "Power"
+	  ],
+	  "keywords": [
+		 "dsc",
+		 "dspic",
+		 "power",
+		 "power-conversion",
+		 "power-supply",
+		 "smps",
+		 "Digital Power",
+		 "Digital Signal Processing/ Filters"
+	  ]
    }
 }
