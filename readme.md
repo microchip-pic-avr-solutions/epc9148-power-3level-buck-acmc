@@ -134,7 +134,7 @@ This firmware uses a digital type IV controller to close the feedback loop in vo
 
 <p>
   <center>
-    <a href="https://www.microchip.com/EPC9151" rel="nofollow">
+    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
       <img src="images/EPC9148_three_level_control_system.JPG" alt="EPC9148 three level control system" width="800">
 	</a>
   <br>
@@ -158,7 +158,7 @@ Please refer to the user guide of PowerSmart&trade; DCLD which is included in th
 
 ##### 4) User Control
 
-No user control interface has been added to the firmware. Any change to the firmware and fundamental operation of the reference design, including reprogramming of the nominal output voltage can be done by editing the hardware-specific values in the hardware description header file 'epc9143_r40_hwdescr.h' located in 'Project Manager => Header Files/Config'
+No user control interface has been added to the firmware. Any change to the firmware and fundamental operation of the reference design, including reprogramming of the nominal output voltage can be done by editing the hardware-specific values in the hardware description header file 'epc9148_r40_hwdescr.h' located in 'Project Manager => Header Files/Config'
 
 Converter settings in this file are defined as physical values such as Volt, Ampere, Ohm, etc. Each defined value is converted into binary numbers by so-called macros, at compile time. Thus, users do not have to convert values manually.
 
@@ -166,15 +166,15 @@ Converter settings in this file are defined as physical values such as Volt, Amp
 To program the converter to provide a nominal output voltage different from the 12 V DC set by default, follow these steps:
 
   - Open the project in MPLAB X® IDE
-  - Navigate to 'Header Files/Config/epc9143_r40_hwdescr.h' using the Project Manager on the left of the main window
+  - Navigate to 'Header Files/Config/epc9148_r40_hwdescr.h' using the Project Manager on the left of the main window
   - Go to line #325 (see below)
   - Change the give settings as desired
   - Build the program
-  - Remove power from the input of the EPC9531 test fixture
-  - Connect a valid ICSP programming device (e.g. MPLAB ICD4, MPLAB PICkit4) to the PC and the EPC9531 test fixture (see [EPC9531 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9531_qsg.pdf) for details)
+  - Remove power from the input of the EPC9148 board
+  - Connect a valid ICSP programming device (e.g. MPLAB ICD4, MPLAB PICkit4) to the PC and the EPC9148 board
   - Program the device with the target device being powered by the debugger/programmer
-  - Disconnect the ICSP programming device from the EPC9531 test fixture
-  - Apply valid input voltage across the input terminals of EPC9531 and observe the output of the EPC9143 reference design
+  - Disconnect the ICSP programming device from the EPC9148
+  - Apply valid input voltage across the input terminals of EPC9148 and observe the output of the EPC9148 reference design
 
 The setting for the nominal output voltage is found in lines #324 through #326.
 
@@ -183,7 +183,7 @@ The setting for the nominal output voltage is found in lines #324 through #326.
     #define BUCK_VOUT_TOLERANCE_MIN     (float)0.100   // Output voltage tolerance [+/-]
 
 ###### Please note:
-The tolerance settings above include the transient response at a maximum load step. The value for maximum output voltage tolerance 'BUCK_VOUT_TOLERANCE_MAX' is observed by the fault handler. Should the output voltage reading divert from the most recent reference voltage value by more than the given range, the converter will be shut down and a REGULATION ERROR will be indicated. The power supply will automatically recover as soon as the fault condition has been cleared and the recover delay period specified by BUCK_REGERR_RECOVERY_DELAY in line #527 of the EPC9143 hardware description header file has expired.
+The tolerance settings above include the transient response at a maximum load step. The value for maximum output voltage tolerance 'BUCK_VOUT_TOLERANCE_MAX' is observed by the fault handler. Should the output voltage reading divert from the most recent reference voltage value by more than the given range, the converter will be shut down and a REGULATION ERROR will be indicated. The power supply will automatically recover as soon as the fault condition has been cleared and the recover delay period specified by BUCK_REGERR_RECOVERY_DELAY in line #527 of the EPC9148 hardware description header file has expired.
 
 (line numbers given may be subject to change)
 
