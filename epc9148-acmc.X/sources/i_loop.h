@@ -27,7 +27,7 @@
 #include <stdint.h> // include standard integer number data types
 #include <stdbool.h> // include standard boolean data types (true/false)
 
-#include ".\npnz16b.h" // include NPNZ library header file
+#include "npnz16b.h" // include NPNZ library header file
 
 /* *******************************************************************************
  * Data Arrays:
