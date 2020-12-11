@@ -20,7 +20,8 @@ An additional fault handler routine continuously monitors incoming ADC data and 
   - Input Voltage: 42 V to 64 V
   - Output Voltage: 5 ... 20 V DC (12 V default setting)
   - Switching Frequency: 400 kHz
-  - Control Frequency: 200 kHz
+  - Control Frequency: 400 kHz
+  - Inductor Ripple Frequency: 800 kHz
   - Cross-Over Frequency: ~9 kHz (depends on VIN and if AGC is on/off)
   - Phase Margin: ~ 50°
   - Gain Margin: ~ 12 dB
