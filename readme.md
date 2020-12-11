@@ -1,7 +1,7 @@
 ![image](images/microchip.jpg) 
 
 ## EPC9148 Ultra-Thin 250 W 48 V Three-Level Synchronous Buck Converter - Average Current Mode Control Firmware
-**2-Phase Synchronous Buck Converter with Advanced Voltage Mode Control and Current Balancing**
+**3-Level Synchronous Buck Converter with Average Current Mode Control with Adaptive Flying Capacitor Voltage Balancing**
 
 <p>
   <center>
@@ -14,7 +14,7 @@
 This code example demonstrates a closed loop average current mode control implementation for dsPIC33CK. It has specifically been developed for the EPC9148 3-Level buck converter reference design.
 
 The board starts up the buck converter automatically when power is applied to the board, providing a regulated output voltage of 12 V at the output of the converter. The startup procedure is controlled and executed by the power controller state machine and includes an configurable startup procedure with power-on delay, ramp up period and power good delay before dropping into constant regulation mode.
-An additional fault handler routine continuously monitors incoming ADC data and peripheral status bits and shuts down the power supply if the input voltage is outside the defined maximum range or if the output voltage is more than 0.5 V out of regulation for more than 10 milliseconds.
+An additional fault handler routine continuously monitors incoming ADC data and peripheral status bits and shuts down the power supply if the input voltage is outside the defined range or if the output voltage is more than +/-0.5 V out of regulation for more than 10 milliseconds.
 
 #### Product Features:
   - Input Voltage: 42 V to 64 V
@@ -31,20 +31,22 @@ An additional fault handler routine continuously monitors incoming ADC data and 
   - EPC9148 Online Firmware Documentation (coming soon)
 
 ##### Firmware Documentation
-  - [EPC9148 48V Three-level Synchronous Buck Converter Reference Design Product Website](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EPC9148)
+- [EPC9148 48V Three-level Synchronous Buck Converter Reference Design Product Website](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EPC9148)
   - [EPC9148 Reference Design Quick Start Guide (QSG)](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf)
   - [EPC9148 Reference Design Schematics](https://epc-co.com/epc/documents/schematics/EPC9148_Schematic.pdf)
 
 ##### Device Support
-  - [dsPIC33CK32MP102 Product Website](https://www.microchip.com/dsPIC33CK32MP102)
+*Featured Microchip Technology Products:*
+- [dsPIC33CK32MP102 Product Website](https://www.microchip.com/dsPIC33CK32MP102)
   - [dsPIC33CKxxMP10x Device Family Data Sheet](https://www.microchip.com/DS70005363)
   - [dsPIC33CKxxMP10x Device Family Silicon Errata and Data Sheet Clarification](https://www.microchip.com/DS80000809)
-  - [MCP6C02 Shunt Amplifier Product Website](https://www.microchip.com/MCP6C02)
-  - [MCP6C02 Zero-Drift, High-Side Current Sense Amplifier](https://www.microchip.com/DS20006129)
+- [MCP6C02 Shunt Amplifier Product Website](https://www.microchip.com/MCP6C02)
+  - [MCP6C02 Zero-Drift, High-Side Current Sense Amplifier Data Sheet](https://www.microchip.com/DS20006129)
 
-  - [EPC2053 100 V, 48/246 A Enhancement-Mode GaN Power Transistor](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2053.aspx)
+*Featured Efficient Power Conversion (EPC) Products:*
+- [EPC2053 100 V, 48/246 A Enhancement-Mode GaN Power Transistor](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2053.aspx)
   - [EPC2053 Data Sheet](https://epc-co.com/epc/Portals/0/epc/documents/datasheets/EPC2053_datasheet.pdf)
-  - [EPC2038 Enhancement Mode Power Transistor with Integrated Reverse Gate Clamp Diode](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2038.aspx)
+- [EPC2038 Enhancement Mode Power Transistor with Integrated Reverse Gate Clamp Diode](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2038.aspx)
   - [EPC2038 Data Sheet](https://epc-co.com/epc/Portals/0/epc/documents/datasheets/EPC2038_datasheet.pdf)
 
 
@@ -74,7 +76,7 @@ The board comes programmed and ready to be used when unpacked. No reprogramming 
 
 <p>
   <center>
-      <img src="images/9148_top_setup.png" alt="EPC9148 Test Connections - Top View" width="620">
+      <img src="images/9148_top_setup.png" alt="EPC9148 Test Connections - Top View" width="520">
 	</a>
   <br>
   EPC9148 Test Connections - Top View
@@ -83,7 +85,7 @@ The board comes programmed and ready to be used when unpacked. No reprogramming 
 
 <p>
   <center>
-      <img src="images/9148_bottom_setup.png" alt="EPC9148 Test Connections - Bottom View" width="620">
+      <img src="images/9148_bottom_setup.png" alt="EPC9148 Test Connections - Bottom View" width="520">
 	</a>
   <br>
   EPC9148 Test Connections - Bottom View
@@ -92,7 +94,7 @@ The board comes programmed and ready to be used when unpacked. No reprogramming 
 
 <p>
   <center>
-      <img src="images/9148_connectors.png" alt="EPC9148 Measurement Connection" width="680">
+      <img src="images/9148_connectors.png" alt="EPC9148 Measurement Connection" width="580">
 	</a>
   <br>
   EPC9148 Measurement Connection
@@ -140,7 +142,9 @@ If the power controller is shut down and reset by external commands (e.g. fault 
 
 ##### 2) Average Current Mode Control
 
-This firmware uses a two digital type II controllers to close the feedback loop in average current mode control and a fying capacitor that provides a single pole filter. The two loops in the average current mode control are the current loop and voltage loop. The EPC9148 board is controlled by the outer voltage loop providing a reference to the inner average current loop. While the flying capacitor voltage is regulated to 1/2Vin using another independent control loop. These digital loops read the most recent ADC sample of the output current, output voltage and flying capacitor voltage, then process the derived values through digital compensation filters. The numeric output is checked and, when necessary, clamped to user-defined minimum/maximum thresholds before being written to the PWM duty cycle register. 
+This firmware uses two digital type II controllers to close the feedback loop in average current mode control. The controller is comprised of two cascaded loops. The outer voltage feedback loop determines the output voltage error and calculates the required reference for the inner average current feedback loop. The inner average current loop determines the most recent deviation between the new reference and most recent feedback signal and adjusts the PWM duty cycle to meet the power demand and correct the output voltage error. The numeric output of each loop is checked against defined minima and maxima thresholds and, when necessary, clamped to these user-defined thresholds to protect the hardware and prevent loop saturation. 
+
+In addition to the basic average current mode control implementation, a third loop is introduced, monitoring and balancing the flying capacitor voltage. This loop tracks voltage peak and valley of the oscillating flying capacitor voltage and tunes the PWM timing to compensate for deviations over component tolerances, load and temperature. The compensation filter is based on a simple low-pass filter limiting the change rate of the balancing error compensation factor to prevent internal oscillations during fast transient responses. The correction factor is then incorporated into the current loop output in every switching cycle. 
 
 <p>
   <center>
@@ -152,7 +156,7 @@ This firmware uses a two digital type II controllers to close the feedback loop 
   </center>
 </p>
 
-This control loop can be turned on/off by using the ENABLE bit in the STATUS word of the cNPNZ_t controller data structure. The adaptive loop gain modulation is permanently active as soon as the control loop is enabled.
+This control system can be turned on/off by using the ENABLE bit in the STATUS word of the cNPNZ_t controller data structure. 
 
 ##### 3) Digital Controller Design
 
@@ -162,7 +166,8 @@ This additional design software is available for download on Github Pages:
 
   - [PowerSmart&trade; Digital Control Library Designer Github Page](https://areiter128.github.io/DCLD)
 
-Once installed, the controller configuration can be modified. The most recent configuration can be opened from within the MPLAB X® IDE by right-clicking on the file 'DPSK3_VMC.dcld' located in the Important Files folder of the Project Manager. When right-clicked, select 'Open In System' to open the configuration in PowerSmart&trade; DCLD. 
+Once installed, the controller configuration can be modified. The most recent configuration can be opened from within the MPLAB X® IDE by right-clicking on the respective control loop configuration file 'xxx_loop.dcld' located in the *Important Files* folder of the Project Manager. Each control loop is configured in its individual configuration file named 'v_loop.dcld' for voltage loops and 'i_loop.dcld' for current loops. 
+When right-clicked, select 'Open In System' to open the configuration in PowerSmart&trade; DCLD. 
 
 Please refer to the user guide of PowerSmart&trade; DCLD which is included in the software and can be opened from the help menu of the application.
 
@@ -192,7 +197,7 @@ The setting for the nominal output voltage is set using these defines
     #define BUCK_VOUT_TOLERANCE_MIN     (float)0.100   // Output voltage tolerance [+/-]
 
 ###### Please note:
-The tolerance settings above include the transient response at a maximum load step. The value for maximum output voltage tolerance 'BUCK_VOUT_TOLERANCE_MAX' is observed by the fault handler. Should the output voltage reading divert from the most recent reference voltage value by more than the given range, the converter will be shut down and a REGULATION ERROR will be indicated. The power supply will automatically recover as soon as the fault condition has been cleared and the recover delay period specified by BUCK_REGERR_RECOVERY_DELAY in line #527 of the EPC9148 hardware description header file has expired.
+The tolerance settings above include the transient response at a maximum load step. The value for maximum output voltage tolerance 'BUCK_VOUT_TOLERANCE_MAX' is observed by the fault handler. Should the output voltage reading divert from the most recent reference voltage value by more than the given range, the converter will be shut down and a REGULATION ERROR will be indicated. The power supply will automatically recover as soon as the fault condition has been cleared and the recovery delay period specified by BUCK_REGERR_RECOVERY_DELAY, declared in the EPC9148 hardware description header file, has expired. The fault trip sensitivity can be adjusted by changing the BUCK_REGERR_TRIP_DELAY declaration.
 
 (line numbers given may be subject to change)
 
@@ -206,7 +211,7 @@ This code examples includes an alternative, proportional control loop which is c
 ###### PLEASE NOTE:
 PROPORTIONAL CONTROLLERS ARE BY DEFAULT UNSTABLE AND NOT SUITED TO REGULATE THE OUTPUT OF A POWER SUPPLY UNDER NORMAL OPERATING CONDITIONS. DURING A PLANT MEASUREMENT IT IS MANDATORY THAT INPUT VOLTAGE AND LOAD REMAIN STABLE AND DO NOT CHANGE. 
 
-FOR MORE INFORMATION ABOUT HOW TO CONDUCT A POWER PLANT MEASUREMENT, PLEASE READ THE SECTIONS IN THE PowerSmart&trade; DCLD USER GUIDE.
+FOR MORE INFORMATION ABOUT HOW TO CONDUCT A POWER PLANT MEASUREMENT, PLEASE REFER TO SECTION 6.1 OF THE PowerSmart&trade; DCLD USER GUIDE.
 
 _________________________________________________
 (c) 2020, Microchip Technology Inc.
