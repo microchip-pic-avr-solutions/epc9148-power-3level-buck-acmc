@@ -14,52 +14,61 @@
 This code example demonstrates a closed loop average current mode control implementation for dsPIC33CK. It has specifically been developed for the EPC9148 3-Level buck converter reference design.
 
 The board starts up the buck converter automatically when power is applied to the board, providing a regulated output voltage of 12 V at the output of the converter. The startup procedure is controlled and executed by the power controller state machine and includes an configurable startup procedure with power-on delay, ramp up period and power good delay before dropping into constant regulation mode.
-An additional fault handler routine continuously monitors incoming ADC data and peripheral status bits and shuts down the power supply if the input voltage is outside the defined maximum range of 16.5 V to 62.5 V (UVLO/OVLO) or if the output voltage is more than 0.5 V out of regulation for more than 10 milliseconds.
-
-A single, high-speed type IV (4P4Z) voltage mode controller with enforced PWM steering is used to automatically create balanced phase currents in both phases of this interleaved converter. An underlying current balancing scheme compensates component tolerances and deviations over temperature. A built-in adaptive gain control algorithm stabilizes gain variations of the voltage loop controller during input- and output voltage transients, stabilizing cross-over frequency and output impedance, supporting control bandwidths of 25 kHz, for improved transient response, helping to minimize power distribution network (PDN) decoupling capacity.
+An additional fault handler routine continuously monitors incoming ADC data and peripheral status bits and shuts down the power supply if the input voltage is outside the defined maximum range or if the output voltage is more than 0.5 V out of regulation for more than 10 milliseconds.
 
 #### Product Features:
   - Input Voltage: 42 V to 64 V
   - Output Voltage: 5 ... 20 V DC (12 V default setting)
   - Switching Frequency: 400 kHz
-  - Control Frequency: 400 kHz
-  - Cross-Over Frequency: ~10 kHz (depends on VIN and if AGC is on/off)
+  - Control Frequency: 200 kHz
+  - Cross-Over Frequency: ~9 kHz (depends on VIN and if AGC is on/off)
   - Phase Margin: ~ 50°
   - Gain Margin: ~ 12 dB
 
 ## Related Documentation
 ##### Firmware Documentation
-  - TODO[EPC9148 Online Firmware Documentation](https://microchip-pic-avr-examples.github.io/epc9148-power-3level-buck-acmc)
+  - EPC9148 Online Firmware Documentation (coming soon)
 
 ##### Firmware Documentation
   - [EPC9148 48V Three-level Synchronous Buck Converter Reference Design Product Website](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/EPC9148)
   - [EPC9148 Reference Design Quick Start Guide (QSG)](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf)
   - [EPC9148 Reference Design Schematics](https://epc-co.com/epc/documents/schematics/EPC9148_Schematic.pdf)
-  
-## Software Used 
-  - [MPLAB® X IDE v5.40](https://www.microchip.com/mplabx-ide-windows-installer)
-  - [MPLAB® XC16 Compiler v1.50](https://www.microchip.com/mplabxc16windows)
-  - [PowerSmart&trade; - Digital Control Library Designer, v0.9.12.642 (Pre-Release Version)](https://areiter128.github.io/DCLD/)
 
+##### Device Support
+  - [dsPIC33CK32MP102 Product Website](https://www.microchip.com/dsPIC33CK32MP102)
+  - [dsPIC33CKxxMP10x Device Family Data Sheet](https://www.microchip.com/DS70005363)
+  - [dsPIC33CKxxMP10x Device Family Silicon Errata and Data Sheet Clarification](https://www.microchip.com/DS80000809)
+  - [MCP6C02 Shunt Amplifier Product Website](https://www.microchip.com/MCP6C02)
+  - [MCP6C02 Zero-Drift, High-Side Current Sense Amplifier](https://www.microchip.com/DS20006129)
+
+  - [EPC2053 100 V, 48/246 A Enhancement-Mode GaN Power Transistor](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2053.aspx)
+  - [EPC2053 Data Sheet](https://epc-co.com/epc/Portals/0/epc/documents/datasheets/EPC2053_datasheet.pdf)
+  - [EPC2038 Enhancement Mode Power Transistor with Integrated Reverse Gate Clamp Diode](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2038.aspx)
+  - [EPC2038 Data Sheet](https://epc-co.com/epc/Portals/0/epc/documents/datasheets/EPC2038_datasheet.pdf)
+
+
+## Software Used 
+  - [MPLAB® X IDE, Version v5.40 or later](https://www.microchip.com/mplabx)
+    - [Download MPLAB® X IDE for Windows](https://www.microchip.com/mplabx-ide-windows-installer)
+    - [Download MPLAB® X IDE for Linux](https://www.microchip.com/mplabx-ide-linux-installer)
+    - [Download MPLAB® X IDE for MAC OS](https://www.microchip.com/mplabx-ide-osx-installer)
+ <br>
+  - [MPLAB® XC16 Compiler, Version v1.50 or later](https://www.microchip.com/xc16)
+    - [Download MPLAB® XC16 Compiler for Windows](https://www.microchip.com/mplabxc16windows)
+    - [Download MPLAB® XC16 Compiler for Linux](https://www.microchip.com/mplabxc16linux)
+    - [Download MPLAB® XC16 Compiler for MAC OS](https://www.microchip.com/mplabxc16osx)
+ <br>
+  - [PowerSmart&trade; - Digital Control Library Designer, v0.9.12.642 (Pre-Release Version)](https://areiter128.github.io/DCLD/)
+    - [Download PowerSmart&trade; - Digital Control Library Designer for Windows](https://github.com/areiter128/DCLD/archive/release.zip)
 
 ## Hardware Used
 The EPC9148 3-level synchronous buck converter module provides all required interfaces to program and debug the dsPIC33CK32MP102 DSC as well as test points and banana jack connectors for easy and safe handling of the kit during bench tests. The EPC9148 QSG provides detailed operating procedure instructions.
-
-
-## Device Support:
-Microchip devices used in this reference design:
-  - [dsPIC33CK32MP102](https://www.microchip.com/dsPIC33CK32MP102)
-  - [MCP6C02 Shunt Amplifier](https://www.microchip.com/MCP6C02)
-
-EPC devices used in this reference design
-  - [EPC2038: 100 V, 246 A Enhancement-Mode GaN Power Transistor](https://epc-co.com/epc/Products/eGaNFETsandICs/EPC2038.aspx)
 
 ## Setup
 The board comes programmed and ready to be used when unpacked. No reprogramming of the target device is required to operate the board unless features or settings such as the nominal output voltage or start-up timing need to be modified. 
 
 <p>
   <center>
-    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
       <img src="images/9148_top_setup.png" alt="EPC9148 Test Connections - Top View" width="620">
 	</a>
   <br>
@@ -69,7 +78,6 @@ The board comes programmed and ready to be used when unpacked. No reprogramming 
 
 <p>
   <center>
-    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
       <img src="images/9148_bottom_setup.png" alt="EPC9148 Test Connections - Bottom View" width="620">
 	</a>
   <br>
@@ -79,7 +87,6 @@ The board comes programmed and ready to be used when unpacked. No reprogramming 
 
 <p>
   <center>
-    <a href="https://www.microchip.com/EPC9148" rel="nofollow">
       <img src="images/9148_connectors.png" alt="EPC9148 Measurement Connection" width="680">
 	</a>
   <br>
@@ -87,9 +94,7 @@ The board comes programmed and ready to be used when unpacked. No reprogramming 
   </center>
 </p>
 
-In case firmware based features need to be changed, the Microchip dsPIC33CK controller can be re-programmed using the in-circuit serial programming port (ICSP) available on the RJ-11 programming interface as well as the 6-pin header. A ribbon cable is needed to connect the programming kit and the EPC9148. These interfaces support all of Microchip’s in-circuit programmers/debuggers, such as MPLAB® ICD4, MPLAB® REAL ICE or MPLAB® PICkit4 and previous derivatives. See [EPC9148 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf) for details.
-
-
+In case firmware based features need to be changed, the Microchip dsPIC33CK controller can be re-programmed using the in-circuit serial programming port (ICSP) available on the RJ-11 programming interface as well as the 5-pin header. A ribbon cable is needed to connect the programming kit and the EPC9148. These interfaces support all of Microchip’s in-circuit programmers/debuggers, such as MPLAB® ICD4, MPLAB® REAL ICE or MPLAB® PICkit4 and previous derivatives. See [EPC9148 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf) for details.
 
 ## Operation
 The converter is starting up automatically when more than 16.6 V DC are applied across the input terminals of the EPC9148.  Please read the [EPC9148 Quick Start Guide](https://epc-co.com/epc/documents/guides/EPC9148_qsg.pdf) to get detailed information about the requirements for setup and operation of this reference design.
@@ -128,9 +133,9 @@ After the Power Good Delay has expired, the converter drops into nominal operati
 i) Suspend/Error
 If the power controller is shut down and reset by external commands (e.g. fault handler detecting a fault condition or through user-interaction), the state machine is switching into the SUSPEND state, which disables the PWM outputs and control loop execution, clears the control histories and resets the state machine back to RESET
 
-##### 2) Cycle-by-Cycle Voltage Control Loop
+##### 2) Average Current Mode Control
 
-This firmware uses a digital type IV controller to close the feedback loop in voltage mode control. This digital loop reads the most recent ADC sample of the output voltage and processes the derived value through a digital type IV (4P4Z) compensation filter. The numeric output is checked and, when necessary, clamped to user-defined minimum/maximum thresholds before being written to the PWM duty cycle register. As EPC9143 is a multiphase converter, a special PWM steering mode has been implemented supporting high-speed current balancing between the two phases. The voltage mode controller has been extended with a self-adapting loop gain tuning algorithm (AGC) stabilizing the frequency domain characteristic over input voltage, output voltage and load, always providing the exact same bandwidth of >25 kHz and stability margins across the entire operating range.
+This firmware uses a two digital type II controllers to close the feedback loop in average current mode control and a fying capacitor that provides a single pole filter. The two loops in the average current mode control are the current loop and voltage loop. The EPC9148 board is controlled by the outer voltage loop providing a reference to the inner average current loop. While the flying capacitor voltage is regulated to 1/2Vin using another independent control loop. These digital loops read the most recent ADC sample of the output current, output voltage and flying capacitor voltage, then process the derived values through digital compensation filters. The numeric output is checked and, when necessary, clamped to user-defined minimum/maximum thresholds before being written to the PWM duty cycle register. 
 
 <p>
   <center>
@@ -158,16 +163,15 @@ Please refer to the user guide of PowerSmart&trade; DCLD which is included in th
 
 ##### 4) User Control
 
-No user control interface has been added to the firmware. Any change to the firmware and fundamental operation of the reference design, including reprogramming of the nominal output voltage can be done by editing the hardware-specific values in the hardware description header file 'epc9148_r40_hwdescr.h' located in 'Project Manager => Header Files/Config'
+No user control interface has been added to the firmware. Any change to the firmware and fundamental operation of the reference design, including reprogramming of the nominal output voltage can be done by editing the hardware-specific values in the hardware description header file 'epc9148_r10_hwdescr.h' located in 'Project Manager => Header Files/Config'
 
 Converter settings in this file are defined as physical values such as Volt, Ampere, Ohm, etc. Each defined value is converted into binary numbers by so-called macros, at compile time. Thus, users do not have to convert values manually.
 
 ##### Example:
-To program the converter to provide a nominal output voltage different from the 12 V DC set by default, follow these steps:
+To program the converter to provide a nominal output voltage different from the 20 V DC set by default, follow these steps:
 
   - Open the project in MPLAB X® IDE
-  - Navigate to 'Header Files/Config/epc9148_r40_hwdescr.h' using the Project Manager on the left of the main window
-  - Go to line #325 (see below)
+  - Navigate to 'Header Files/Config/epc9148_r10_hwdescr.h' using the Project Manager on the left of the main window
   - Change the give settings as desired
   - Build the program
   - Remove power from the input of the EPC9148 board
@@ -176,7 +180,7 @@ To program the converter to provide a nominal output voltage different from the 
   - Disconnect the ICSP programming device from the EPC9148
   - Apply valid input voltage across the input terminals of EPC9148 and observe the output of the EPC9148 reference design
 
-The setting for the nominal output voltage is found in lines #324 through #326.
+The setting for the nominal output voltage is set using these defines
 
     #define BUCK_VOUT_NOMINAL           (float)12.000  // Nominal output voltage
     #define BUCK_VOUT_TOLERANCE_MAX     (float)0.500   // Output voltage tolerance [+/-]
@@ -191,7 +195,7 @@ The tolerance settings above include the transient response at a maximum load st
 
 This code examples includes an alternative, proportional control loop which is commonly used during measurements of the frequency response of the power plant. When the following define is set to TRUE, the common main control loop is replaced by the proportional controller.
 
-    app_power_control.c, line 33:   #define PLANT_MEASUREMENT   false
+    app_power_control.c:   #define PLANT_MEASUREMENT   false
 
 
 ###### PLEASE NOTE:
