@@ -1,0 +1,255 @@
+/*
+    Jenkins Shared Library:
+    ----------------------
+    shared-library-mcu16ce - https://bitbucket.microchip.com/scm/citd/shared-library-mcu16ce.git
+    shared-library-common - https://bitbucket.microchip.com/scm/citd/shared-library-common.git    
+*/
+@Library(['shared-library-mcu16ce@develop', 'shared-library-common@develop']) _
+
+pipeline {
+    agent {
+        kubernetes {
+            label 'epc9148-power-3level-buck-acmc-github-deployment'
+            defaultContainer 'xc16-mplabx-sonar-fmpp-python'
+            yamlFile '.citd/cloudprovider.yml'
+        }
+    }
+   
+    environment {
+        /*
+            Common Information
+        */
+        NOTIFICATION_EMAIL = '1f1319de.microchip.com@amer.teams.ms'  
+        // GitHub production organization name
+        GITHUB_PRODUCTION_ORGANIZATION = "microchip-pic-avr-examples"
+        
+        /*
+            GitHub Deploy Stage Information
+        */
+        //This is the BitBucket source repo URL to be deployed
+        BITBUCKET_SOURCE_URL = 'https://bitbucket.microchip.com/scm/mcu16ce/epc9148-power-3level-buck-acmc.git'  
+        //Files or folders to be excluded from deployment, if multiple files or folders use comma separator
+        DEPLOY_EXCLUDE_FOLDER_FILE_LIST = 'mchp_private,.mchp_private,sandbox,.sandbox'
+        //Branch(s) to be deployed, if multiple branches use comma separator. ${env.BRANCH_NAME} is the target branch of the PR.
+        DEPLOY_BRANCH_LIST = "${env.BRANCH_NAME}"
+        
+        /*
+            GitHub Release Stage Information
+        */
+        CHANGE_LOG_PATH = 'changelog.md'
+        
+        /*
+            Bitbucket Tag Creation Stage Information
+        */
+        BITBUCKET_PROJECT_NAME = 'MCU16CE'
+        
+        /*
+            GitHub Page Stage Information
+            List of GitHub Page Options:
+            ----------------------------
+            1. GITHUB_PAGES_NONE         ( Branch: None, index file path: None )
+            2. GITHUB_PAGES_MASTER_ROOT  ( Branch: Master, index file path: /root )
+            3. GITHUB_PAGES_MASTER_DOCS  ( Branch: Develop, index file path: /Docs ) 
+            4. GITHUB_PAGES_DEVELOP_ROOT ( Branch: Master, index file path: /root )
+            5. GITHUB_PAGES_DEVELOP_DOCS ( Branch: Develop, index file path: /Docs )
+        */
+        GITHUB_PAGES = 'GITHUB_PAGES_NONE'    
+
+        /*
+            Project Build Stage Information
+        */
+        MPLABX_PROJECT_SOURCE = "../"
+        
+        /*
+            Json Schema validator Stage Information
+        */
+        JSON_SCHEMA_FILE_PATH = "tool-github-deploy/tool-github-deploy/json/json_schema.json"
+    }
+
+    options {
+        timestamps()
+        timeout(time: 20, unit: 'MINUTES')
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('project config update') {
+            steps {
+                script {                    
+                    mplabxProjectConfigUpdate(
+                        sourceFilePath: "${env.MPLABX_PROJECT_SOURCE}"
+                    )
+                }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {                   
+                    mplabxProjectBuild(
+                        sourceFilePath: "${env.MPLABX_PROJECT_SOURCE}"
+                    )
+               }
+            }
+        }
+        
+        // Validate main.json file
+           stage('Validate main.json'){            
+            steps{
+               script{                    
+                    validateMetaData(
+                        jsonSchemaFilePath: "${env.JSON_SCHEMA_FILE_PATH}"
+                    )                   
+                }
+            }
+        } 
+        
+        // Creating tag in Bitbucket repo
+           stage('Bitbucket Tag Creation') {
+            when {
+                    anyOf {
+                        allOf {
+                            not { changeRequest() }
+                            anyOf {branch 'master';}
+                        }
+                    }
+            }
+            steps{
+               script{
+                    bitbucketTagCreation(
+                        projectName: "${env.BITBUCKET_PROJECT_NAME}",
+                        commitId: "${env.GIT_COMMIT}"
+                    )
+                }
+            }
+        }
+        
+        // GitHub repo creation 
+        stage('GitHub Repo Creation'){
+            when {
+                    anyOf {
+                        allOf {
+                            not { changeRequest() }
+                            anyOf {branch 'master'; branch 'test_deploy';}
+                        }
+                    }
+            }
+            steps{
+                script{
+                    githubRepoCreate(
+                         githubOrgName : "${env.GITHUB_PRODUCTION_ORGANIZATION}"
+                    )
+                }
+            }
+        } 
+
+        // Deploying the code to GitHub 
+        stage('GitHub Deploy Source'){
+            when {
+                    anyOf {
+                        allOf {
+                            not { changeRequest() }
+                            anyOf {branch 'master'; branch 'test_deploy';}
+                        }
+                    }
+            }
+            steps{
+                script{
+                
+                    githubDeploySource(
+                        bitbucketUrl: "${env.BITBUCKET_SOURCE_URL}",
+                        deployBranchList: "${env.DEPLOY_BRANCH_LIST}",
+                        deployExcludeFileList: "${env.DEPLOY_EXCLUDE_FOLDER_FILE_LIST}",
+                        githubOrgName: "${env.GITHUB_PRODUCTION_ORGANIZATION}"
+                    )
+                }
+            }
+        }
+        
+        // Creating GitHub release  
+        stage('GitHub release'){
+            when {
+                    anyOf {
+                        allOf {
+                            not { changeRequest() }
+                            anyOf {branch 'master'; branch 'test_deploy';}
+                        }
+                    }
+            }
+            
+            steps{
+               script{
+                    githubReleaseCreate(
+                        changeLogFilePath: "${env.CHANGE_LOG_PATH}",
+                        githubOrgName: "${env.GITHUB_PRODUCTION_ORGANIZATION}"                        
+                    )
+                }
+            }
+        }
+        
+        // Creating GitHub Page  
+        stage('GitHub Page Create'){
+            when {
+                    anyOf {
+                        allOf {
+                            not { changeRequest() }
+                            anyOf {branch 'master'; branch 'test_deploy';}
+                        }
+                    }
+            }
+            
+            steps{
+               script{
+                    githubPageCreate(
+                        githubPage: "${env.GITHUB_PAGES}",
+                        githubOrgName: "${env.GITHUB_PRODUCTION_ORGANIZATION}"
+                    )
+                }
+            }
+        }
+        
+        //Deploying the Github content to portal
+        stage('Portal-Deploy') {
+            when {
+                allOf {
+                    not { changeRequest() }
+                    anyOf {branch 'master';}
+                }
+            }
+            steps {
+                script {
+                    portalDeploy(
+                        githubOrgName: "${env.GITHUB_PRODUCTION_ORGANIZATION}"
+                    )
+                }
+            }
+        }
+      }
+
+    post {
+        success{
+            script {
+                sendMail(
+                    mailId: "${env.NOTIFICATION_EMAIL}",
+                    subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "Something is right with ${env.BUILD_URL}"
+                )
+            }
+        }
+        failure {
+            script {
+                sendMail(
+                    mailId: "${env.NOTIFICATION_EMAIL}",
+                    subject: "Failure Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "Something is right with ${env.BUILD_URL}"
+                )
+            }
+        }
+    }
+}
