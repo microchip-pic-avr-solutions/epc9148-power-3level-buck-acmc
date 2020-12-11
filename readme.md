@@ -48,19 +48,19 @@ An additional fault handler routine continuously monitors incoming ADC data and 
   - [EPC2038 Data Sheet](https://epc-co.com/epc/Portals/0/epc/documents/datasheets/EPC2038_datasheet.pdf)
 
 
-## Software Used 
-  - [MPLAB® X IDE, Version v5.40 or later](https://www.microchip.com/mplabx)
-    - [Download MPLAB® X IDE for Windows](https://www.microchip.com/mplabx-ide-windows-installer)
-    - [Download MPLAB® X IDE for Linux](https://www.microchip.com/mplabx-ide-linux-installer)
-    - [Download MPLAB® X IDE for MAC OS](https://www.microchip.com/mplabx-ide-osx-installer)
+## Development Tools 
+  - [Requires MPLAB® X IDE, Version v5.40 or later](https://www.microchip.com/mplabx)
+    - [Download latest version of MPLAB® X IDE for Windows](https://www.microchip.com/mplabx-ide-windows-installer)
+    - [Download latest version of MPLAB® X IDE for Linux](https://www.microchip.com/mplabx-ide-linux-installer)
+    - [Download latest version of MPLAB® X IDE for MAC OS](https://www.microchip.com/mplabx-ide-osx-installer)
  <br>
-  - [MPLAB® XC16 Compiler, Version v1.50 or later](https://www.microchip.com/xc16)
-    - [Download MPLAB® XC16 Compiler for Windows](https://www.microchip.com/mplabxc16windows)
-    - [Download MPLAB® XC16 Compiler for Linux](https://www.microchip.com/mplabxc16linux)
-    - [Download MPLAB® XC16 Compiler for MAC OS](https://www.microchip.com/mplabxc16osx)
+  - [Requires MPLAB® XC16 Compiler, Version v1.50 or later](https://www.microchip.com/xc16)
+    - [Download latest version of MPLAB® XC16 Compiler for Windows](https://www.microchip.com/mplabxc16windows)
+    - [Download latest version of MPLAB® XC16 Compiler for Linux](https://www.microchip.com/mplabxc16linux)
+    - [Download latest version of MPLAB® XC16 Compiler for MAC OS](https://www.microchip.com/mplabxc16osx)
  <br>
-  - [PowerSmart&trade; - Digital Control Library Designer, v0.9.12.642 (Pre-Release Version)](https://areiter128.github.io/DCLD/)
-    - [Download PowerSmart&trade; - Digital Control Library Designer for Windows](https://github.com/areiter128/DCLD/archive/release.zip)
+  - [Optional: PowerSmart&trade; - Digital Control Library Designer, v0.9.12.642 or later (Pre-Release Version)](https://areiter128.github.io/DCLD/)
+    - [Download latest version of PowerSmart&trade; - Digital Control Library Designer for Windows](https://github.com/areiter128/DCLD/archive/release.zip)
 
 ## Hardware Used
 The EPC9148 3-level synchronous buck converter module provides all required interfaces to program and debug the dsPIC33CK32MP102 DSC as well as test points and banana jack connectors for easy and safe handling of the kit during bench tests. The EPC9148 QSG provides detailed operating procedure instructions.
