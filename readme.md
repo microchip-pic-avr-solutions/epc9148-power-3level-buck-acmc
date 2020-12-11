@@ -49,16 +49,20 @@ An additional fault handler routine continuously monitors incoming ADC data and 
 
 
 ## Development Tools 
+
+##### MPLAB® X Integrated Development Environment (IDE)
   - [Requires MPLAB® X IDE, Version v5.40 or later](https://www.microchip.com/mplabx)
     - [Download latest version of MPLAB® X IDE for Windows](https://www.microchip.com/mplabx-ide-windows-installer)
     - [Download latest version of MPLAB® X IDE for Linux](https://www.microchip.com/mplabx-ide-linux-installer)
     - [Download latest version of MPLAB® X IDE for MAC OS](https://www.microchip.com/mplabx-ide-osx-installer)
- <br>
+
+##### MPLAB® XC16 C-Compiler
   - [Requires MPLAB® XC16 Compiler, Version v1.50 or later](https://www.microchip.com/xc16)
     - [Download latest version of MPLAB® XC16 Compiler for Windows](https://www.microchip.com/mplabxc16windows)
     - [Download latest version of MPLAB® XC16 Compiler for Linux](https://www.microchip.com/mplabxc16linux)
     - [Download latest version of MPLAB® XC16 Compiler for MAC OS](https://www.microchip.com/mplabxc16osx)
- <br>
+
+##### MPLAB® X PowerSmart™ Digital Control Library Designer
   - [Optional: PowerSmart&trade; - Digital Control Library Designer, v0.9.12.642 or later (Pre-Release Version)](https://areiter128.github.io/DCLD/)
     - [Download latest version of PowerSmart&trade; - Digital Control Library Designer for Windows](https://github.com/areiter128/DCLD/archive/release.zip)
 
